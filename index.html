@@ -2,207 +2,219 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>USDT Wallet Dashboard</title>
+  <title>C-Wallet USDT Dashboard</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --accent-1: #43e8b6;
-      --accent-2: #3a8cff;
-      --accent-3: #ffb86c;
-      --bg: #10182b;
-      --card: #171f36;
-      --glass: rgba(23,31,54,0.7);
-      --muted: #a7b1c2;
+      --accent-1: #0be881;
+      --accent-2: #1abc9c;
+      --accent-3: #eafaf1;
+      --bg: #0e1726;
+      --card: #13293d;
+      --glass: rgba(19,41,61,0.85);
+      --muted: #b8eac7;
       --white: #fff;
-      --card-border: #1c253f;
+      --card-border: #17c784;
       --error: #ff5e5e;
+      --success: #0be881;
     }
     body {
       margin: 0;
       font-family: 'Inter', Arial, sans-serif;
-      background: linear-gradient(120deg, #10182b 0%, #222e50 100%);
+      background: linear-gradient(120deg, var(--bg) 0%, #1abc9c 100%);
       color: var(--white);
       min-height: 100vh;
       letter-spacing: 0.01em;
+      transition: background 0.3s;
     }
-    .wrap {
+    .centered {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(120deg, #0be881 0%, #1abc9c 60%, #13293d 100%);
+      animation: fadeInBg 0.7s cubic-bezier(.7,.13,.58,.89);
+    }
+    @keyframes fadeInBg {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .welcome-card {
+      background: var(--card);
+      border: 1.5px solid var(--card-border);
+      border-radius: 22px;
+      padding: 38px 32px 28px 32px;
+      box-shadow: 0 10px 48px rgba(11,232,129,0.25);
+      text-align: center;
+      margin-bottom: 32px;
+      animation: fadeIn .6s cubic-bezier(.7,.13,.58,.89);
+      max-width: 390px;
       width: 100%;
-      max-width: 1100px;
-      margin: 34px auto 0 auto;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    .logo-main {
+      width: 66px; height: 66px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,var(--accent-3),var(--accent-1));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: #0e1726; font-size: 28px;
+      margin: 0 auto 18px auto;
+      box-shadow: 0 8px 30px rgba(11,232,129,0.3);
+      letter-spacing: -0.01em;
+    }
+    .welcome-card h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent-1);
+      letter-spacing: -0.03em;
+    }
+    .welcome-card p {
+      margin: 0 0 22px 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .btn-main {
+      display: inline-block;
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color: #0e1726;
+      font-weight: 800;
+      font-size: 1.12rem;
+      border: none;
+      border-radius: 14px;
+      padding: 13px 38px;
+      box-shadow: 0 8px 30px rgba(11,232,129,0.18);
+      cursor:pointer;
+      margin-top: 8px;
+      transition: background .15s, box-shadow .15s;
+      outline: none;
+    }
+    .btn-main:active {
+      background: linear-gradient(90deg,#1abc9c,#0be881);
+      box-shadow: 0 7px 22px rgba(11,232,129,0.15);
+    }
+
+    /* Dashboard */
+    .dashboard-wrap {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: 410px 1fr;
-      gap: 32px;
+      grid-template-columns: 400px 1fr;
+      gap: 38px;
       align-items: start;
+      animation: fadeIn .6s cubic-bezier(.7,.13,.58,.89);
     }
     @media (max-width:980px) {
-      .wrap { grid-template-columns: 1fr; padding: 0 12px; }
+      .dashboard-wrap { grid-template-columns: 1fr; padding: 0 12px; }
     }
     .card {
       background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 10px 48px rgba(43, 232, 182, 0.12);
-      margin-bottom: 16px;
-      animation: fadeIn .4s ease;
+      border: 1.5px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 48px rgba(11,232,129,0.15);
+      margin-bottom: 18px;
+      animation: fadeIn .5s cubic-bezier(.7,.13,.58,.89);
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .brand {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    .logo {
-      width: 56px; height: 56px;
-      border-radius: 14px;
-      background: linear-gradient(135deg,var(--accent-3),var(--accent-1));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: #04101a; font-size: 22px;
-      box-shadow: 0 8px 30px rgba(7,16,30,0.6);
-      letter-spacing: -0.02em;
-    }
-    .brand h1 { margin:0; font-size:18px; font-weight:800; }
-    .brand p { margin:0; font-size:13px; color:var(--muted); }
-    /* Deposit */
     .deposit-box {
       background: linear-gradient(90deg, var(--accent-1),var(--accent-2));
-      color: #1d3340;
-      padding: 18px 20px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      display:flex; flex-direction:column; gap:8px;
-      box-shadow: 0 8px 32px rgba(43,232,182,0.13);
+      color: #0e1726;
+      padding: 20px 22px;
+      border-radius: 15px;
+      font-size: 1.18rem;
+      font-weight: 800;
+      margin-bottom: 30px;
+      display:flex; flex-direction:column; gap:10px;
+      box-shadow: 0 8px 32px rgba(11,232,129,0.09);
+      animation: fadeIn .5s cubic-bezier(.7,.13,.58,.89);
     }
     .deposit-addr {
-      background: rgba(255,255,255,0.12);
-      color: #1d3340;
-      padding: 9px 13px;
-      border-radius: 9px;
+      background: rgba(255,255,255,0.15);
+      color: #0e1726;
+      padding: 12px 13px;
+      border-radius: 10px;
       font-family: 'Inter', monospace;
-      font-size: 16px;
+      font-size: 1.1rem;
       word-break: break-all;
       letter-spacing: 0.04em;
       display: flex; align-items: center; gap: 8px;
+      font-weight: 700;
     }
     .copy-btn {
       background: transparent;
-      border: 1px solid #1d3340;
-      color: #1d3340;
-      padding: 4px 10px;
-      border-radius: 6px;
+      border: 1px solid #1abc9c;
+      color: #0e1726;
+      padding: 4px 13px;
+      border-radius: 8px;
       cursor:pointer;
-      font-size: 13px;
-      font-weight: 600;
-      transition: background .18s;
-    }
-    .copy-btn:active { background: rgba(67,232,182,0.16); }
-    /* Form */
-    form .label {
-      display: block;
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    .field { margin-bottom: 13px; }
-    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], textarea, select {
-      width: 100%;
-      padding: 12px 11px;
-      border-radius: 10px;
-      background: var(--glass);
-      border: 1px solid var(--card-border);
-      color: var(--white);
-      outline: none;
       font-size: 15px;
-      transition: box-shadow .13s, border-color .13s;
-      font-family: inherit;
-    }
-    input:focus, textarea:focus, select:focus {
-      box-shadow: 0 9px 30px rgba(67,232,182,0.07);
-      border-color: var(--accent-1);
-    }
-    .small-row { display: flex; gap: 12px; }
-    .small { width: 130px; }
-    .muted { font-size: 12px; color: var(--muted); }
-    .error { color: var(--error); }
-    .actions {
-      display: flex; gap: 12px; margin-top: 8px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 11px 18px;
-      border-radius: 10px;
-      border: none;
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      color: #032;
-      cursor:pointer;
       font-weight: 700;
-      font-size: 15px;
-      box-shadow: 0 8px 30px rgba(67,232,182,0.08);
-      transition: background .13s;
+      transition: background .18s;
+      outline: none;
     }
-    .btn.ghost {
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--white);
-      font-weight: 600;
-    }
-    .note {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 13px;
-      padding: 10px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.02);
-    }
-    /* Dashboard side */
+    .copy-btn:active { background: rgba(11,232,129,0.14); }
+    /* Dashboard body */
     .dash-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .wallet-card {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px;
-      border-radius: 14px;
+      padding: 20px;
+      border-radius: 15px;
       border: 1px solid var(--card-border);
       background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
       margin-bottom:10px;
     }
-    .wallet-left { display: flex; gap: 16px; align-items: center; }
+    .wallet-left { display: flex; gap: 18px; align-items: center; }
     .coin-badge {
       width: 60px; height: 60px;
       border-radius: 14px;
-      background: linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      background: linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: var(--accent-1);
-      font-size: 26px;
+      font-weight: 900; color: var(--accent-1);
+      font-size: 30px;
     }
     .balances { line-height: 1; }
-    .balances .big { font-size: 26px; font-weight: 800;}
-    .balances .small { font-size: 14px; color: var(--muted); margin-top: 6px;}
-    .controls { display: flex; gap: 12px; align-items: center;}
+    .balances .big { font-size: 31px; font-weight: 900; color:var(--accent-1);}
+    .balances .small { font-size: 15px; color: var(--muted); margin-top: 8px;}
+    .controls { display: flex; gap: 14px; align-items: center;}
+    .btn-dash {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 22px;
+      border-radius: 13px;
+      border: none;
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color: #0e1726;
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 1.06rem;
+      box-shadow: 0 8px 30px rgba(11,232,129,0.10);
+      transition: background .15s;
+      outline: none;
+    }
+    .btn-dash.ghost {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--white);
+      font-weight: 700;
+    }
     /* Activity */
     .panel {
-      padding: 18px;
-      border-radius: 14px;
+      padding: 20px;
+      border-radius: 15px;
       border: 1px solid var(--card-border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
       color: var(--muted);
       max-height: 340px;
       overflow-y: auto;
@@ -211,46 +223,72 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding: 11px 0;
-      border-bottom: 1px dashed rgba(255,255,255,0.02);
+      padding: 13px 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.03);
     }
     .activity-item:last-child { border-bottom: none; }
-    .activity-item .title { font-weight: 700; color: var(--white);}
-    .activity-item .meta { font-size: 13px; color: var(--muted);}
+    .activity-item .title { font-weight: 800; color: var(--white);}
+    .activity-item .meta { font-size: 15px; color: var(--muted);}
     /* Footer */
     footer {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
       text-align: center;
-      margin-top: 20px;
-      margin-bottom: 10px;
+      margin-top: 22px;
+      margin-bottom: 12px;
     }
     /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(3,6,12,0.6);
+      background: rgba(11,232,129,0.15);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 60;
+      animation: fadeInBg .5s cubic-bezier(.7,.13,.58,.89);
     }
     .modal {
-      width: 430px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      border: 1px solid var(--card-border);
-      padding: 24px;
-      border-radius: 14px;
-      color: var(--white);
-      box-shadow: 0 10px 36px rgba(43,232,182,0.18);
+      width: 440px;
+      background: linear-gradient(180deg, #eafaf1 0%, #1abc9c 100%);
+      border: 2px solid var(--card-border);
+      padding: 28px;
+      border-radius: 17px;
+      color: #0e1726;
+      box-shadow: 0 10px 36px rgba(11,232,129,0.18);
       position:relative;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .modal .label {
+      font-weight: 700;
+      color: #17c784;
+      margin-bottom: 7px;
+      font-size: 16px;
+      display: block;
+    }
+    .modal input[type="text"] {
+      width: 100%;
+      padding: 13px 11px;
+      border-radius: 10px;
+      background: #eafaf1;
+      border: 1.5px solid #17c784;
+      color: #0e1726;
+      font-size: 16px;
+      margin-bottom: 8px;
+      font-family: inherit;
+      outline: none;
+      transition: border .13s;
+    }
+    .modal input:focus {
+      border-color: var(--accent-1);
+      background: #eafaf1;
     }
     .progress {
-      height: 14px;
-      background: rgba(255,255,255,0.06);
+      height: 15px;
+      background: #b8eac7;
       border-radius: 999px;
       overflow: hidden;
-      margin-top: 12px;
+      margin-top: 13px;
     }
     .progress-bar {
       height: 100%;
@@ -258,112 +296,95 @@
       background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
       transition: width .2s linear;
     }
-    /* Misc */
-    ::selection { background: var(--accent-1); color: #222e50;}
+    .modal .btn-dash {
+      margin-top: 12px;
+      min-width: 110px;
+      font-size: 1.08rem;
+    }
+    .modal .btn-dash.ghost {
+      color: #0e1726;
+      border: 1.5px solid #17c784;
+      background: #eafaf1;
+    }
+    /* Toast */
+    .toast {
+      position: fixed;
+      right: 26px;
+      bottom: 32px;
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color: #0e1726;
+      padding: 13px 19px;
+      border-radius: 12px;
+      box-shadow:0 10px 30px rgba(11,232,129,0.09);
+      display:none;
+      z-index:80;
+      font-weight: 800;
+      font-size: 1.06rem;
+    }
+    .error { color: #ff5e5e; margin-bottom: 8px;}
+    .success { color: #0be881; margin-bottom: 8px;}
+    ::selection { background: var(--accent-1); color: #13293d;}
+    /* Hide scrollbar in activity panel for a cleaner app look */
+    .panel::-webkit-scrollbar { width: 8px; background: transparent;}
+    .panel::-webkit-scrollbar-thumb { background: #17c784; border-radius: 8px;}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- LEFT: Registration & Deposit -->
+  <!-- Welcome page -->
+  <div class="centered" id="welcomePage">
+    <div class="welcome-card">
+      <div class="logo-main">C</div>
+      <h1>Welcome back to C-Wallet</h1>
+      <p>Your secure USDT wallet (BEP-20) is ready.<br>
+      <span style="color:#17c784;">Professional. Fast. Green.</span></p>
+      <button class="btn-main" id="btnEnter">Enter Wallet</button>
+    </div>
+    <footer class="muted">Demo only — not an exchange. Do not share private keys.</footer>
+  </div>
+  <!-- Dashboard -->
+  <div class="dashboard-wrap" id="dashboard" style="display:none;">
+    <!-- Left: Deposit Info -->
     <div>
-      <div class="header">
-        <div class="brand">
-          <div class="logo">USDT</div>
-          <div>
-            <h1>USDT Wallet Dashboard</h1>
-            <p>Powered by BEP-20 · Demo UI only</p>
-          </div>
-        </div>
-      </div>
       <!-- Deposit Notice -->
       <div class="deposit-box">
-        Deposit <span style="color:#1d3340;font-weight:800;">45-90 TRX</span> to this wallet address on the <b>BEP-20</b> network:<br>
+        Deposit <span style="color:#0e1726;font-weight:900;">122 USDT</span> to this wallet address on <b>BEP-20</b>:<br>
         <div class="deposit-addr" id="depositAddr">
           0x3140ee41555a14a7e0c4c96a636e63b24946d4f9
           <button class="copy-btn" onclick="copyDepositAddr()">Copy</button>
         </div>
-        <div class="muted" style="color:#1d3340;">Funds will reflect after confirmation.</div>
+        <div class="muted" style="color:#0e1726;">Funds will reflect after network confirmation.</div>
       </div>
-      <!-- Registration Form -->
-      <form id="formReg" autocomplete="off" novalidate>
-        <div class="field">
-          <label class="label">Full legal name</label>
-          <input id="fullName" type="text" placeholder="Jane Alexandra Doe" required />
-          <div class="muted error" id="errName"></div>
-        </div>
-        <div class="small-row">
-          <div class="field small">
-            <label class="label">DOB</label>
-            <input id="dob" type="date" required />
-          </div>
-          <div class="field" style="flex:1">
-            <label class="label">Nationality</label>
-            <input id="country" type="text" placeholder="Country" />
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Email</label>
-          <input id="email" type="email" placeholder="you@example.com" required />
-          <div class="muted error" id="errEmail"></div>
-        </div>
-        <div class="field">
-          <label class="label">Mobile phone (with country code)</label>
-          <input id="phone" type="tel" placeholder="+1 555 555 5555" />
-        </div>
-        <div class="field">
-          <label class="label">Residential address</label>
-          <textarea id="address" rows="2" placeholder="Street, City, State/Postal code"></textarea>
-        </div>
-        <div class="field">
-          <label class="label">Receiving wallet address (BEP-20)</label>
-          <input id="wallet" type="text" placeholder="0x..." required />
-          <div class="muted" id="errWallet">Ensure this is a Binance Smart Chain (BEP-20) address you control.</div>
-        </div>
-        <div class="field">
-          <label class="label">Source of funds (brief)</label>
-          <input id="source" type="text" placeholder="Employment, savings, trading, etc." />
-        </div>
-        <div class="actions">
-          <button class="btn" id="btnSubmit" type="submit">Enter & Save</button>
-          <button class="btn ghost" type="button" id="btnClear">Clear</button>
-          <button class="btn ghost" type="button" id="btnPreview" title="Preview dashboard">Preview</button>
-        </div>
-        <div class="note">
-          By submitting you confirm you are at least 18 years old. Demo stores data only in your browser. Do not submit private keys or account passwords.
-        </div>
-      </form>
     </div>
-
-    <!-- RIGHT: Dashboard -->
+    <!-- Right: Main Dashboard -->
     <div>
       <div class="card" id="dashTop">
         <div class="dash-top">
           <div>
-            <div style="display:flex;gap:14px;align-items:center">
+            <div style="display:flex;gap:18px;align-items:center">
               <div style="display:flex;flex-direction:column">
-                <div style="font-size:13px;color:var(--muted)">Available balance</div>
+                <div style="font-size:15px;color:var(--muted);font-weight:700;">Available balance</div>
                 <div class="balances">
-                  <div class="big" id="animatedBalance">$7,500.00</div>
+                  <div class="big" id="animatedBalance">$2,430.00</div>
                   <div class="small">USDT (BEP-20)</div>
                 </div>
               </div>
-              <div style="margin-left:18px">
-                <div style="font-size:13px;color:var(--muted)">Wallet</div>
-                <div id="displayWallet" style="font-weight:700;color:var(--white);max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">—</div>
+              <div style="margin-left:22px">
+                <div style="font-size:15px;color:var(--muted);font-weight:700;">Wallet</div>
+                <div id="displayWallet" style="font-weight:800;color:var(--accent-1);font-size:1.02em;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</div>
               </div>
             </div>
           </div>
           <div class="controls">
-            <button class="btn" id="btnReceive">Receive</button>
-            <button class="btn" id="btnOpenWithdraw">Withdraw</button>
+            <button class="btn-dash" id="btnReceive">Receive</button>
+            <button class="btn-dash" id="btnOpenWithdraw">Withdraw</button>
           </div>
         </div>
       </div>
-      <div class="card" style="margin-top:8px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="card" style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <div>
-            <strong>Recent activity</strong>
-            <div class="muted" style="margin-top:6px">Transactions & events (simulated)</div>
+            <strong style="color:var(--accent-1);font-weight:900;">Recent activity</strong>
+            <div class="muted" style="margin-top:7px">Transactions & events (simulated)</div>
           </div>
           <div class="muted" id="txCount">0 items</div>
         </div>
@@ -380,22 +401,24 @@
       <div style="margin-bottom:14px">
         <label class="label">To wallet address</label>
         <div style="display:flex;gap:8px;align-items:center">
-          <input id="modalWallet" type="text" style="flex:1" />
+          <input id="modalWallet" type="text" placeholder="0x... (BEP-20)" style="flex:1" />
           <button class="copy-btn" id="copyModalWallet">Copy</button>
         </div>
+        <div class="error" id="errWithdrawWallet"></div>
       </div>
       <div class="field">
         <label class="label">Amount (USDT)</label>
-        <input id="modalAmount" type="text" value="7500" />
+        <input id="modalAmount" type="text" value="200" />
+        <div class="error" id="errWithdrawAmount"></div>
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn ghost" id="confirmCancel">Cancel</button>
-        <button class="btn" id="confirmWithdraw">Confirm Withdraw</button>
+        <button class="btn-dash ghost" id="confirmCancel">Cancel</button>
+        <button class="btn-dash" id="confirmWithdraw">Confirm Withdraw</button>
       </div>
       <div id="withdrawStage" style="margin-top:14px;display:none">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div class="muted">Status</div>
-          <div id="stageLabel" style="font-weight:800">Pending</div>
+          <div id="stageLabel" style="font-weight:900;color:#17c784;">Pending</div>
         </div>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
         <div style="height:10px"></div>
@@ -405,7 +428,14 @@
   </div>
   <div class="toast" id="toast"></div>
   <script>
-    // Smooth Copy deposit address
+    // Navigation
+    document.getElementById('btnEnter').onclick = function() {
+      document.getElementById('welcomePage').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'grid';
+      animateBalance('2430.00');
+      renderActivity();
+    };
+    // Deposit copy
     function copyDepositAddr() {
       navigator.clipboard.writeText('0x3140ee41555a14a7e0c4c96a636e63b24946d4f9');
       showToast('Deposit address copied!');
@@ -416,94 +446,55 @@
       showToast('Wallet address copied!');
     };
     // Toast
-    function showToast(msg) {
+    function showToast(msg, type='info') {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
       toast.style.display = 'block';
-      setTimeout(()=>{toast.style.display='none';},2000);
+      toast.style.background = type === 'error'
+        ? 'linear-gradient(90deg,#ff5e5e,#1abc9c)'
+        : 'linear-gradient(90deg,var(--accent-1),var(--accent-2))';
+      setTimeout(()=>{toast.style.display='none';},2100);
     }
-    // Save/load registration
-    function validateForm() {
-      let ok = true;
-      document.getElementById('errName').textContent = '';
-      document.getElementById('errEmail').textContent = '';
-      const name = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      if(!name) {
-        document.getElementById('errName').textContent = 'Name required';
-        ok = false;
-      }
-      if(!email || !email.includes('@')) {
-        document.getElementById('errEmail').textContent = 'Valid email required';
-        ok = false;
-      }
-      return ok;
-    }
-    function saveForm() {
-      const data = {
-        name: document.getElementById('fullName').value,
-        dob: document.getElementById('dob').value,
-        country: document.getElementById('country').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        wallet: document.getElementById('wallet').value,
-        source: document.getElementById('source').value,
-      };
-      localStorage.setItem('usdtReg', JSON.stringify(data));
-      showToast('Saved!');
-      updateDashboardWallet();
-    }
-    function loadForm() {
-      const data = JSON.parse(localStorage.getItem('usdtReg')||'{}');
-      if(!data) return;
-      document.getElementById('fullName').value = data.name||'';
-      document.getElementById('dob').value = data.dob||'';
-      document.getElementById('country').value = data.country||'';
-      document.getElementById('email').value = data.email||'';
-      document.getElementById('phone').value = data.phone||'';
-      document.getElementById('address').value = data.address||'';
-      document.getElementById('wallet').value = data.wallet||'';
-      document.getElementById('source').value = data.source||'';
-      updateDashboardWallet();
-    }
-    function clearForm() {
-      localStorage.removeItem('usdtReg');
-      document.getElementById('formReg').reset();
-      updateDashboardWallet();
-      showToast('Cleared!');
-    }
-    function updateDashboardWallet() {
-      const data = JSON.parse(localStorage.getItem('usdtReg')||'{}');
-      document.getElementById('displayWallet').textContent = data.wallet||'—';
-    }
-    document.getElementById('formReg').onsubmit = function(e){
-      e.preventDefault();
-      if(validateForm()) saveForm();
-    };
-    document.getElementById('btnClear').onclick = clearForm;
-    document.getElementById('btnPreview').onclick = loadForm;
     // Withdraw modal
-    let modalOpen = false;
     document.getElementById('btnOpenWithdraw').onclick = function() {
       openModal();
     };
     document.getElementById('confirmCancel').onclick = closeModal;
     function openModal() {
       document.getElementById('modalBackdrop').style.display='flex';
-      modalOpen=true;
       document.getElementById('withdrawStage').style.display='none';
       document.getElementById('stageLabel').textContent = 'Pending';
       document.getElementById('progressBar').style.width = '0%';
       document.getElementById('stageNote').textContent = 'Processing transaction... please wait';
-      document.getElementById('modalWallet').value = document.getElementById('displayWallet').textContent || '';
-      document.getElementById('modalAmount').value = '7500';
+      document.getElementById('modalWallet').value = '';
+      document.getElementById('modalAmount').value = '200';
+      document.getElementById('errWithdrawWallet').textContent = '';
+      document.getElementById('errWithdrawAmount').textContent = '';
     }
     function closeModal() {
       document.getElementById('modalBackdrop').style.display='none';
-      modalOpen=false;
+    }
+    function validateWithdraw() {
+      let ok = true;
+      const wallet = document.getElementById('modalWallet').value.trim();
+      const amount = document.getElementById('modalAmount').value.trim();
+      document.getElementById('errWithdrawWallet').textContent = '';
+      document.getElementById('errWithdrawAmount').textContent = '';
+      if(!wallet || !/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
+        document.getElementById('errWithdrawWallet').textContent = 'Valid BEP-20 wallet address required';
+        ok = false;
+      }
+      if(!amount || isNaN(amount) || Number(amount)<=0 || Number(amount)>2430) {
+        document.getElementById('errWithdrawAmount').textContent = 'Amount must be positive and ≤ balance';
+        ok = false;
+      }
+      return ok;
     }
     document.getElementById('confirmWithdraw').onclick = function() {
+      if(!validateWithdraw()) {
+        showToast('Please fix errors before submitting.','error');
+        return;
+      }
       // Simulate withdrawal
       document.getElementById('withdrawStage').style.display='block';
       document.getElementById('stageLabel').textContent = 'Processing';
@@ -511,7 +502,7 @@
       document.getElementById('stageNote').textContent = 'Processing transaction... please wait';
       let pct = 0;
       let timer = setInterval(()=>{
-        pct+=17;
+        pct+=21;
         document.getElementById('progressBar').style.width = pct+'%';
         if(pct>=100) {
           clearInterval(timer);
@@ -521,9 +512,13 @@
             title: 'Withdraw',
             meta: new Date().toLocaleString() + ' · USDT $' + document.getElementById('modalAmount').value,
           });
+          showToast('Withdrawal completed!','success');
           setTimeout(closeModal, 1200);
+          let current = Number(document.getElementById('animatedBalance').textContent.replace(/[^0-9.]/g,''));
+          let out = Number(document.getElementById('modalAmount').value);
+          animateBalance((current-out).toFixed(2));
         }
-      }, 400);
+      }, 350);
     };
     // Receive button
     document.getElementById('btnReceive').onclick = function() {
@@ -531,14 +526,14 @@
     };
     // Activity log
     function pushActivity(act) {
-      let arr = JSON.parse(localStorage.getItem('usdtActs')||'[]');
+      let arr = JSON.parse(localStorage.getItem('cwalletActs')||'[]');
       arr.unshift(act);
       if(arr.length>10) arr=arr.slice(0,10);
-      localStorage.setItem('usdtActs', JSON.stringify(arr));
+      localStorage.setItem('cwalletActs', JSON.stringify(arr));
       renderActivity();
     }
     function renderActivity() {
-      let arr = JSON.parse(localStorage.getItem('usdtActs')||'[]');
+      let arr = JSON.parse(localStorage.getItem('cwalletActs')||'[]');
       document.getElementById('txCount').textContent = arr.length + ' item' + (arr.length===1?'':'s');
       const panel = document.getElementById('activityPanel');
       panel.innerHTML = '';
@@ -556,28 +551,28 @@
     // Animate balance
     function animateBalance(val) {
       const el = document.getElementById('animatedBalance');
-      let start = 0, end = parseFloat(val.replace(/[^0-9.]/g,''));
+      let start = parseFloat(el.textContent.replace(/[^0-9.]/g,'')) || 0;
+      let end = parseFloat(val);
       let curr = start;
-      let steps = 45, step = (end-start)/steps, count = 0;
+      let steps = 36, step = (end-start)/steps, count = 0;
       let timer = setInterval(()=>{
         curr += step;
         count++;
-        el.textContent = '$' + curr.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+        el.textContent = '$' + Math.max(curr,0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         if(count>=steps) {
-          el.textContent = '$' + end.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+          el.textContent = '$' + Math.max(end,0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
           clearInterval(timer);
         }
       },22);
     }
-    // On load
-    window.onload = function(){
-      loadForm();
-      renderActivity();
-      animateBalance('7500.00');
-    };
     // Modal close on backdrop click
     document.getElementById('modalBackdrop').onclick = function(e){
       if(e.target === this) closeModal();
+    };
+    // On load: keep dashboard off until enter
+    window.onload = function(){
+      // If there are saved activities, load them
+      renderActivity();
     };
   </script>
 </body>

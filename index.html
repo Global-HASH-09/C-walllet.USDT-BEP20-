@@ -12,7 +12,7 @@
       --accent-3: #eafaf1;
       --bg: #0e1726;
       --card: #13293d;
-      --glass: rgba(19,41,61,0.85);
+      --glass: rgba(19,41,61,0.92);
       --muted: #b8eac7;
       --white: #fff;
       --card-border: #17c784;
@@ -98,140 +98,77 @@
     }
 
     /* Dashboard */
-    .dashboard-wrap {
+    .dashboard-mobile {
       width: 100%;
-      max-width: 1160px;
+      max-width: 430px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 38px;
-      align-items: start;
-      animation: fadeIn .6s cubic-bezier(.7,.13,.58,.89);
-    }
-    @media (max-width:980px) {
-      .dashboard-wrap { grid-template-columns: 1fr; padding: 0 12px; }
+      padding: 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      animation: fadeIn .7s cubic-bezier(.7,.13,.58,.89);
     }
     .card {
       background: var(--card);
       border: 1.5px solid var(--card-border);
       border-radius: 20px;
-      padding: 28px;
+      padding: 28px 22px 24px 22px;
       box-shadow: 0 10px 48px rgba(11,232,129,0.15);
-      margin-bottom: 18px;
-      animation: fadeIn .5s cubic-bezier(.7,.13,.58,.89);
-    }
-    .deposit-box {
-      background: linear-gradient(90deg, var(--accent-1),var(--accent-2));
-      color: #0e1726;
-      padding: 20px 22px;
-      border-radius: 15px;
-      font-size: 1.18rem;
-      font-weight: 800;
-      margin-bottom: 30px;
-      display:flex; flex-direction:column; gap:10px;
-      box-shadow: 0 8px 32px rgba(11,232,129,0.09);
-      animation: fadeIn .5s cubic-bezier(.7,.13,.58,.89);
-    }
-    .deposit-addr {
-      background: rgba(255,255,255,0.15);
-      color: #0e1726;
-      padding: 12px 13px;
-      border-radius: 10px;
-      font-family: 'Inter', monospace;
-      font-size: 1.1rem;
-      word-break: break-all;
-      letter-spacing: 0.04em;
-      display: flex; align-items: center; gap: 8px;
-      font-weight: 700;
-    }
-    .copy-btn {
-      background: transparent;
-      border: 1px solid #1abc9c;
-      color: #0e1726;
-      padding: 4px 13px;
-      border-radius: 8px;
-      cursor:pointer;
-      font-size: 15px;
-      font-weight: 700;
-      transition: background .18s;
-      outline: none;
-    }
-    .copy-btn:active { background: rgba(11,232,129,0.14); }
-    /* Dashboard body */
-    .dash-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
+      margin: 0 0 18px 0;
+      animation: fadeIn .6s cubic-bezier(.7,.13,.58,.89);
     }
     .wallet-card {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      border-radius: 15px;
-      border: 1px solid var(--card-border);
+      flex-direction: column;
+      gap: 13px;
+      align-items: flex-start;
+      padding: 0;
+      border-radius: 13px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      margin-bottom:10px;
+      margin-bottom:15px;
     }
-    .wallet-left { display: flex; gap: 18px; align-items: center; }
-    .coin-badge {
-      width: 60px; height: 60px;
-      border-radius: 14px;
-      background: linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; color: var(--accent-1);
-      font-size: 30px;
+    .balances { line-height: 1.2; }
+    .balances .big { font-size: 2.25rem; font-weight: 900; color:var(--accent-1);}
+    .balances .small { font-size: 1.09rem; color: var(--muted); margin-top: 5px;}
+    .wallet-label { font-size: 1rem; color: var(--muted); font-weight: 700;}
+    .wallet-address {
+      font-weight:800;
+      color:var(--accent-1);
+      font-size:1.12em;
+      max-width:320px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      font-family: 'Inter', monospace;
+      margin-top:8px;
+      letter-spacing:0.01em;
     }
-    .balances { line-height: 1; }
-    .balances .big { font-size: 31px; font-weight: 900; color:var(--accent-1);}
-    .balances .small { font-size: 15px; color: var(--muted); margin-top: 8px;}
-    .controls { display: flex; gap: 14px; align-items: center;}
+    .controls { display: flex; gap: 0; align-items: center; justify-content: stretch; width: 100%; }
     .btn-dash {
+      width: 100%;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 7px;
-      padding: 12px 22px;
+      padding: 15px 0;
       border-radius: 13px;
       border: none;
       background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
       color: #0e1726;
       cursor:pointer;
       font-weight: 800;
-      font-size: 1.06rem;
+      font-size: 1.08rem;
       box-shadow: 0 8px 30px rgba(11,232,129,0.10);
       transition: background .15s;
       outline: none;
+      margin-top: 2px;
     }
-    .btn-dash.ghost {
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--white);
-      font-weight: 700;
+    .btn-dash:active {
+      background: linear-gradient(90deg,#1abc9c,#0be881);
     }
-    /* Activity */
-    .panel {
-      padding: 20px;
-      border-radius: 15px;
-      border: 1px solid var(--card-border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      color: var(--muted);
-      max-height: 340px;
-      overflow-y: auto;
-    }
-    .activity-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 13px 0;
-      border-bottom: 1px dashed rgba(255,255,255,0.03);
-    }
-    .activity-item:last-child { border-bottom: none; }
-    .activity-item .title { font-weight: 800; color: var(--white);}
-    .activity-item .meta { font-size: 15px; color: var(--muted);}
     /* Footer */
     footer {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--muted);
       text-align: center;
       margin-top: 22px;
@@ -241,7 +178,7 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(11,232,129,0.15);
+      background: rgba(11,232,129,0.17);
       display: none;
       align-items: center;
       justify-content: center;
@@ -249,15 +186,19 @@
       animation: fadeInBg .5s cubic-bezier(.7,.13,.58,.89);
     }
     .modal {
-      width: 440px;
+      width: 95vw;
+      max-width: 410px;
       background: linear-gradient(180deg, #eafaf1 0%, #1abc9c 100%);
       border: 2px solid var(--card-border);
-      padding: 28px;
+      padding: 28px 18px 24px 18px;
       border-radius: 17px;
       color: #0e1726;
       box-shadow: 0 10px 36px rgba(11,232,129,0.18);
       position:relative;
       font-family: 'Inter', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
     .modal .label {
       font-weight: 700;
@@ -297,20 +238,16 @@
       transition: width .2s linear;
     }
     .modal .btn-dash {
-      margin-top: 12px;
+      margin-top: 18px;
       min-width: 110px;
       font-size: 1.08rem;
-    }
-    .modal .btn-dash.ghost {
-      color: #0e1726;
-      border: 1.5px solid #17c784;
-      background: #eafaf1;
     }
     /* Toast */
     .toast {
       position: fixed;
-      right: 26px;
-      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 24px;
       background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
       color: #0e1726;
       padding: 13px 19px;
@@ -319,14 +256,24 @@
       display:none;
       z-index:80;
       font-weight: 800;
-      font-size: 1.06rem;
+      font-size: 1.04rem;
+      text-align: center;
+      min-width: 220px;
+      max-width: 90vw;
+      word-break:break-word;
     }
     .error { color: #ff5e5e; margin-bottom: 8px;}
     .success { color: #0be881; margin-bottom: 8px;}
     ::selection { background: var(--accent-1); color: #13293d;}
-    /* Hide scrollbar in activity panel for a cleaner app look */
-    .panel::-webkit-scrollbar { width: 8px; background: transparent;}
-    .panel::-webkit-scrollbar-thumb { background: #17c784; border-radius: 8px;}
+    @media (max-width: 500px) {
+      .dashboard-mobile, .card, .modal {
+        max-width: 100vw;
+        border-radius: 0;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .welcome-card { border-radius: 0; }
+    }
   </style>
 </head>
 <body>
@@ -334,7 +281,7 @@
   <div class="centered" id="welcomePage">
     <div class="welcome-card">
       <div class="logo-main">C</div>
-      <h1>Welcome back to C-Wallet</h1>
+      <h1>Welcome to C-Wallet</h1>
       <p>Your secure USDT wallet (BEP-20) is ready.<br>
       <span style="color:#17c784;">Professional. Fast. Green.</span></p>
       <button class="btn-main" id="btnEnter">Enter Wallet</button>
@@ -342,88 +289,51 @@
     <footer class="muted">Demo only — not an exchange. Do not share private keys.</footer>
   </div>
   <!-- Dashboard -->
-  <div class="dashboard-wrap" id="dashboard" style="display:none;">
-    <!-- Left: Deposit Info -->
-    <div>
-      <!-- Deposit Notice -->
-      <div class="deposit-box">
-        Deposit <span style="color:#0e1726;font-weight:900;">122 USDT</span> to this wallet address on <b>BEP-20</b>:<br>
-        <div class="deposit-addr" id="depositAddr">
-          0x3140ee41555a14a7e0c4c96a636e63b24946d4f9
-          <button class="copy-btn" onclick="copyDepositAddr()">Copy</button>
+  <div class="dashboard-mobile" id="dashboard" style="display:none;">
+    <div class="card">
+      <div class="wallet-card">
+        <div class="balances">
+          <div class="big" id="animatedBalance">$7,500.00</div>
+          <div class="small">USDT (BEP-20)</div>
         </div>
-        <div class="muted" style="color:#0e1726;">Funds will reflect after network confirmation.</div>
+        <div class="wallet-label">Your Wallet</div>
+        <div class="wallet-address" id="displayWallet">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</div>
+      </div>
+      <div class="controls">
+        <button class="btn-dash" id="btnOpenWithdraw">Withdraw</button>
       </div>
     </div>
-    <!-- Right: Main Dashboard -->
-    <div>
-      <div class="card" id="dashTop">
-        <div class="dash-top">
-          <div>
-            <div style="display:flex;gap:18px;align-items:center">
-              <div style="display:flex;flex-direction:column">
-                <div style="font-size:15px;color:var(--muted);font-weight:700;">Available balance</div>
-                <div class="balances">
-                  <div class="big" id="animatedBalance">$2,430.00</div>
-                  <div class="small">USDT (BEP-20)</div>
-                </div>
-              </div>
-              <div style="margin-left:22px">
-                <div style="font-size:15px;color:var(--muted);font-weight:700;">Wallet</div>
-                <div id="displayWallet" style="font-weight:800;color:var(--accent-1);font-size:1.02em;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</div>
-              </div>
-            </div>
-          </div>
-          <div class="controls">
-            <button class="btn-dash" id="btnReceive">Receive</button>
-            <button class="btn-dash" id="btnOpenWithdraw">Withdraw</button>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="margin-top:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div>
-            <strong style="color:var(--accent-1);font-weight:900;">Recent activity</strong>
-            <div class="muted" style="margin-top:7px">Transactions & events (simulated)</div>
-          </div>
-          <div class="muted" id="txCount">0 items</div>
-        </div>
-        <div id="activityPanel" class="panel">
-          <div id="noActivity" style="text-align:center;padding:28px;color:var(--muted)">No activity yet</div>
-        </div>
-      </div>
-      <footer class="muted">Demo only — not an exchange. Do not share private keys.</footer>
-    </div>
+    <footer class="muted" style="margin-bottom: 26px;">Demo only — not an exchange. Do not share private keys.</footer>
   </div>
   <!-- Modal for Withdraw -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
-      <div style="margin-bottom:14px">
+      <div style="margin-bottom:18px">
         <label class="label">To wallet address</label>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input id="modalWallet" type="text" placeholder="0x... (BEP-20)" style="flex:1" />
-          <button class="copy-btn" id="copyModalWallet">Copy</button>
-        </div>
+        <input id="modalWallet" type="text" placeholder="0x... (BEP-20)" />
         <div class="error" id="errWithdrawWallet"></div>
       </div>
-      <div class="field">
+      <div class="field" style="margin-bottom:18px;">
         <label class="label">Amount (USDT)</label>
         <input id="modalAmount" type="text" value="200" />
         <div class="error" id="errWithdrawAmount"></div>
       </div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn-dash ghost" id="confirmCancel">Cancel</button>
-        <button class="btn-dash" id="confirmWithdraw">Confirm Withdraw</button>
-      </div>
-      <div id="withdrawStage" style="margin-top:14px;display:none">
+      <button class="btn-dash" id="confirmWithdraw">Confirm Withdraw</button>
+      <div id="withdrawStage" style="margin-top:22px;display:none">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div class="muted">Status</div>
           <div id="stageLabel" style="font-weight:900;color:#17c784;">Pending</div>
         </div>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-        <div style="height:10px"></div>
+        <div style="height:13px"></div>
         <div id="stageNote" class="muted">Processing transaction... please wait</div>
+        <div style="margin-top:13px;color:#0e1726;font-weight:700;font-size:1.1em;" id="feeInfo"></div>
+        <div style="margin-top:7px;">
+          <span style="color:#17c784;font-weight:800;">Deposit USDT to:</span>
+          <span style="color:#13293d;font-family:'Inter',monospace;word-break:break-all;">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</span>
+        </div>
       </div>
+      <button class="btn-dash" style="margin-top:24px;background:transparent;color:#0e1726;border:1.5px solid #17c784;" id="confirmCancel">Cancel</button>
     </div>
   </div>
   <div class="toast" id="toast"></div>
@@ -431,19 +341,8 @@
     // Navigation
     document.getElementById('btnEnter').onclick = function() {
       document.getElementById('welcomePage').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'grid';
-      animateBalance('2430.00');
-      renderActivity();
-    };
-    // Deposit copy
-    function copyDepositAddr() {
-      navigator.clipboard.writeText('0x3140ee41555a14a7e0c4c96a636e63b24946d4f9');
-      showToast('Deposit address copied!');
-    }
-    document.getElementById('copyModalWallet').onclick = function() {
-      const addr = document.getElementById('modalWallet').value;
-      navigator.clipboard.writeText(addr);
-      showToast('Wallet address copied!');
+      document.getElementById('dashboard').style.display = 'flex';
+      animateBalance('7500.00');
     };
     // Toast
     function showToast(msg, type='info') {
@@ -470,9 +369,12 @@
       document.getElementById('modalAmount').value = '200';
       document.getElementById('errWithdrawWallet').textContent = '';
       document.getElementById('errWithdrawAmount').textContent = '';
+      document.getElementById('feeInfo').textContent = '';
     }
     function closeModal() {
       document.getElementById('modalBackdrop').style.display='none';
+      document.getElementById('withdrawStage').style.display='none';
+      document.getElementById('feeInfo').textContent = '';
     }
     function validateWithdraw() {
       let ok = true;
@@ -484,7 +386,7 @@
         document.getElementById('errWithdrawWallet').textContent = 'Valid BEP-20 wallet address required';
         ok = false;
       }
-      if(!amount || isNaN(amount) || Number(amount)<=0 || Number(amount)>2430) {
+      if(!amount || isNaN(amount) || Number(amount)<=0 || Number(amount)>7500) {
         document.getElementById('errWithdrawAmount').textContent = 'Amount must be positive and ≤ balance';
         ok = false;
       }
@@ -495,59 +397,28 @@
         showToast('Please fix errors before submitting.','error');
         return;
       }
-      // Simulate withdrawal
+      // Show fee and deposit info only during processing
       document.getElementById('withdrawStage').style.display='block';
       document.getElementById('stageLabel').textContent = 'Processing';
       document.getElementById('progressBar').style.width = '0%';
       document.getElementById('stageNote').textContent = 'Processing transaction... please wait';
+      document.getElementById('feeInfo').textContent = 'Network fee: 122 USDT';
       let pct = 0;
       let timer = setInterval(()=>{
-        pct+=21;
+        pct+=26;
         document.getElementById('progressBar').style.width = pct+'%';
         if(pct>=100) {
           clearInterval(timer);
           document.getElementById('stageLabel').textContent = 'Completed';
           document.getElementById('stageNote').textContent = 'Transaction successful!';
-          pushActivity({
-            title: 'Withdraw',
-            meta: new Date().toLocaleString() + ' · USDT $' + document.getElementById('modalAmount').value,
-          });
           showToast('Withdrawal completed!','success');
           setTimeout(closeModal, 1200);
           let current = Number(document.getElementById('animatedBalance').textContent.replace(/[^0-9.]/g,''));
           let out = Number(document.getElementById('modalAmount').value);
           animateBalance((current-out).toFixed(2));
         }
-      }, 350);
+      }, 400);
     };
-    // Receive button
-    document.getElementById('btnReceive').onclick = function() {
-      showToast('To receive, deposit to your wallet address above.');
-    };
-    // Activity log
-    function pushActivity(act) {
-      let arr = JSON.parse(localStorage.getItem('cwalletActs')||'[]');
-      arr.unshift(act);
-      if(arr.length>10) arr=arr.slice(0,10);
-      localStorage.setItem('cwalletActs', JSON.stringify(arr));
-      renderActivity();
-    }
-    function renderActivity() {
-      let arr = JSON.parse(localStorage.getItem('cwalletActs')||'[]');
-      document.getElementById('txCount').textContent = arr.length + ' item' + (arr.length===1?'':'s');
-      const panel = document.getElementById('activityPanel');
-      panel.innerHTML = '';
-      if(!arr.length) {
-        panel.innerHTML = '<div id="noActivity" style="text-align:center;padding:28px;color:var(--muted)">No activity yet</div>';
-        return;
-      }
-      arr.forEach(item=>{
-        const div = document.createElement('div');
-        div.className = 'activity-item';
-        div.innerHTML = `<span class="title">${item.title}</span><span class="meta">${item.meta}</span>`;
-        panel.appendChild(div);
-      });
-    }
     // Animate balance
     function animateBalance(val) {
       const el = document.getElementById('animatedBalance');
@@ -569,11 +440,8 @@
     document.getElementById('modalBackdrop').onclick = function(e){
       if(e.target === this) closeModal();
     };
-    // On load: keep dashboard off until enter
-    window.onload = function(){
-      // If there are saved activities, load them
-      renderActivity();
-    };
+    // On load
+    window.onload = function(){};
   </script>
 </body>
 </html>

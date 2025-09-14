@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>C-Wallet USDT Dashboard</title>
+  <title>لوحة تحكم محفظة USDT - C-Wallet</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
@@ -27,6 +27,7 @@
       min-height: 100vh;
       letter-spacing: 0.01em;
       transition: background 0.3s;
+      direction: rtl;
     }
     .centered {
       min-height: 100vh;
@@ -277,18 +278,18 @@
   </style>
 </head>
 <body>
-  <!-- Welcome page -->
+  <!-- الصفحة الترحيبية -->
   <div class="centered" id="welcomePage">
     <div class="welcome-card">
       <div class="logo-main">C</div>
-      <h1>Welcome to C-Wallet</h1>
-      <p>Your secure USDT wallet (BEP-20) is ready.<br>
-      <span style="color:#17c784;">Professional. Fast. Green.</span></p>
-      <button class="btn-main" id="btnEnter">Enter Wallet</button>
+      <h1>مرحبًا بك في C-Wallet</h1>
+      <p>محفظتك الآمنة USDT (BEP-20) جاهزة للاستخدام.<br>
+      <span style="color:#17c784;">احترافية. سريعة. خضراء.</span></p>
+      <button class="btn-main" id="btnEnter">دخول إلى المحفظة</button>
     </div>
-    <footer class="muted">Demo only — not an exchange. Do not share private keys.</footer>
+    <footer class="muted">عرض تجريبي فقط — ليست منصة تداول. لا تشارك مفاتيحك الخاصة.</footer>
   </div>
-  <!-- Dashboard -->
+  <!-- لوحة التحكم -->
   <div class="dashboard-mobile" id="dashboard" style="display:none;">
     <div class="card">
       <div class="wallet-card">
@@ -296,55 +297,55 @@
           <div class="big" id="animatedBalance">$7,500.00</div>
           <div class="small">USDT (BEP-20)</div>
         </div>
-        <div class="wallet-label">Your Wallet</div>
+        <div class="wallet-label">محفظتك</div>
         <div class="wallet-address" id="displayWallet">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</div>
       </div>
       <div class="controls">
-        <button class="btn-dash" id="btnOpenWithdraw">Withdraw</button>
+        <button class="btn-dash" id="btnOpenWithdraw">سحب</button>
       </div>
     </div>
-    <footer class="muted" style="margin-bottom: 26px;">Demo only — not an exchange. Do not share private keys.</footer>
+    <footer class="muted" style="margin-bottom: 26px;">عرض تجريبي فقط — ليست منصة تداول. لا تشارك مفاتيحك الخاصة.</footer>
   </div>
-  <!-- Modal for Withdraw -->
+  <!-- نافذة السحب -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
       <div style="margin-bottom:18px">
-        <label class="label">To wallet address</label>
+        <label class="label">إلى عنوان المحفظة</label>
         <input id="modalWallet" type="text" placeholder="0x... (BEP-20)" />
         <div class="error" id="errWithdrawWallet"></div>
       </div>
       <div class="field" style="margin-bottom:18px;">
-        <label class="label">Amount (USDT)</label>
+        <label class="label">المبلغ (USDT)</label>
         <input id="modalAmount" type="text" value="200" />
         <div class="error" id="errWithdrawAmount"></div>
       </div>
-      <button class="btn-dash" id="confirmWithdraw">Confirm Withdraw</button>
+      <button class="btn-dash" id="confirmWithdraw">تأكيد السحب</button>
       <div id="withdrawStage" style="margin-top:22px;display:none">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="muted">Status</div>
-          <div id="stageLabel" style="font-weight:900;color:#17c784;">Pending</div>
+          <div class="muted">الحالة</div>
+          <div id="stageLabel" style="font-weight:900;color:#17c784;">قيد المعالجة</div>
         </div>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
         <div style="height:13px"></div>
-        <div id="stageNote" class="muted">Processing transaction... please wait</div>
+        <div id="stageNote" class="muted">جارٍ معالجة العملية... يرجى الانتظار</div>
         <div style="margin-top:13px;color:#0e1726;font-weight:700;font-size:1.1em;" id="feeInfo"></div>
         <div style="margin-top:7px;">
-          <span style="color:#17c784;font-weight:800;">Deposit USDT to:</span>
+          <span style="color:#17c784;font-weight:800;">قم بإيداع USDT إلى:</span>
           <span style="color:#13293d;font-family:'Inter',monospace;word-break:break-all;">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</span>
         </div>
       </div>
-      <button class="btn-dash" style="margin-top:24px;background:transparent;color:#0e1726;border:1.5px solid #17c784;" id="confirmCancel">Cancel</button>
+      <button class="btn-dash" style="margin-top:24px;background:transparent;color:#0e1726;border:1.5px solid #17c784;" id="confirmCancel">إلغاء</button>
     </div>
   </div>
   <div class="toast" id="toast"></div>
   <script>
-    // Navigation
+    // الانتقال
     document.getElementById('btnEnter').onclick = function() {
       document.getElementById('welcomePage').style.display = 'none';
       document.getElementById('dashboard').style.display = 'flex';
       animateBalance('7500.00');
     };
-    // Toast
+    // الرسائل المنبثقة
     function showToast(msg, type='info') {
       const toast = document.getElementById('toast');
       toast.textContent = msg;
@@ -354,7 +355,7 @@
         : 'linear-gradient(90deg,var(--accent-1),var(--accent-2))';
       setTimeout(()=>{toast.style.display='none';},2100);
     }
-    // Withdraw modal
+    // نافذة السحب
     document.getElementById('btnOpenWithdraw').onclick = function() {
       openModal();
     };
@@ -362,9 +363,9 @@
     function openModal() {
       document.getElementById('modalBackdrop').style.display='flex';
       document.getElementById('withdrawStage').style.display='none';
-      document.getElementById('stageLabel').textContent = 'Pending';
+      document.getElementById('stageLabel').textContent = 'قيد المعالجة';
       document.getElementById('progressBar').style.width = '0%';
-      document.getElementById('stageNote').textContent = 'Processing transaction... please wait';
+      document.getElementById('stageNote').textContent = 'جارٍ معالجة العملية... يرجى الانتظار';
       document.getElementById('modalWallet').value = '';
       document.getElementById('modalAmount').value = '200';
       document.getElementById('errWithdrawWallet').textContent = '';
@@ -383,35 +384,35 @@
       document.getElementById('errWithdrawWallet').textContent = '';
       document.getElementById('errWithdrawAmount').textContent = '';
       if(!wallet || !/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
-        document.getElementById('errWithdrawWallet').textContent = 'Valid BEP-20 wallet address required';
+        document.getElementById('errWithdrawWallet').textContent = 'يرجى إدخال عنوان محفظة BEP-20 صحيح';
         ok = false;
       }
       if(!amount || isNaN(amount) || Number(amount)<=0 || Number(amount)>7500) {
-        document.getElementById('errWithdrawAmount').textContent = 'Amount must be positive and ≤ balance';
+        document.getElementById('errWithdrawAmount').textContent = 'المبلغ يجب أن يكون رقمًا موجبًا وأقل أو يساوي الرصيد';
         ok = false;
       }
       return ok;
     }
     document.getElementById('confirmWithdraw').onclick = function() {
       if(!validateWithdraw()) {
-        showToast('Please fix errors before submitting.','error');
+        showToast('يرجى تصحيح الأخطاء قبل المتابعة.','error');
         return;
       }
-      // Show fee and deposit info only during processing
+      // إظهار الرسوم ومعلومات الإيداع أثناء المعالجة فقط
       document.getElementById('withdrawStage').style.display='block';
-      document.getElementById('stageLabel').textContent = 'Processing';
+      document.getElementById('stageLabel').textContent = 'قيد المعالجة';
       document.getElementById('progressBar').style.width = '0%';
-      document.getElementById('stageNote').textContent = 'Processing transaction... please wait';
-      document.getElementById('feeInfo').textContent = 'Network fee: 122 USDT';
+      document.getElementById('stageNote').textContent = 'جارٍ معالجة العملية... يرجى الانتظار';
+      document.getElementById('feeInfo').textContent = 'رسوم الشبكة: 122 USDT';
       let pct = 0;
       let timer = setInterval(()=>{
         pct+=26;
         document.getElementById('progressBar').style.width = pct+'%';
         if(pct>=100) {
           clearInterval(timer);
-          document.getElementById('stageLabel').textContent = 'Completed';
-          document.getElementById('stageNote').textContent = 'Transaction successful!';
-          showToast('Withdrawal completed!','success');
+          document.getElementById('stageLabel').textContent = 'تمت العملية';
+          document.getElementById('stageNote').textContent = 'تمت العملية بنجاح!';
+          showToast('تم السحب بنجاح!','success');
           setTimeout(closeModal, 1200);
           let current = Number(document.getElementById('animatedBalance').textContent.replace(/[^0-9.]/g,''));
           let out = Number(document.getElementById('modalAmount').value);
@@ -419,7 +420,7 @@
         }
       }, 400);
     };
-    // Animate balance
+    // تحريك الرصيد
     function animateBalance(val) {
       const el = document.getElementById('animatedBalance');
       let start = parseFloat(el.textContent.replace(/[^0-9.]/g,'')) || 0;
@@ -436,11 +437,10 @@
         }
       },22);
     }
-    // Modal close on backdrop click
+    // إغلاق النافذة عند النقر خارجها
     document.getElementById('modalBackdrop').onclick = function(e){
       if(e.target === this) closeModal();
     };
-    // On load
     window.onload = function(){};
   </script>
 </body>

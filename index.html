@@ -1,447 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>لوحة تحكم محفظة USDT - C-Wallet</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>تفاصيل السحب</title>
   <style>
-    :root {
-      --accent-1: #0be881;
-      --accent-2: #1abc9c;
-      --accent-3: #eafaf1;
-      --bg: #0e1726;
-      --card: #13293d;
-      --glass: rgba(19,41,61,0.92);
-      --muted: #b8eac7;
-      --white: #fff;
-      --card-border: #17c784;
-      --error: #ff5e5e;
-      --success: #0be881;
-    }
     body {
-      margin: 0;
-      font-family: 'Inter', Arial, sans-serif;
-      background: linear-gradient(120deg, var(--bg) 0%, #1abc9c 100%);
-      color: var(--white);
-      min-height: 100vh;
-      letter-spacing: 0.01em;
-      transition: background 0.3s;
-      direction: rtl;
+      background-color: #121212;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
     }
-    .centered {
-      min-height: 100vh;
+    h1 {
+      text-align: center;
+    }
+    .amount {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .processing {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: linear-gradient(120deg, #0be881 0%, #1abc9c 60%, #13293d 100%);
-      animation: fadeInBg 0.7s cubic-bezier(.7,.13,.58,.89);
+      font-weight: bold;
+      color: #FFD700;
+      animation: pulse 1.5s infinite;
     }
-    @keyframes fadeInBg {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
     }
-    .welcome-card {
-      background: var(--card);
-      border: 1.5px solid var(--card-border);
-      border-radius: 22px;
-      padding: 38px 32px 28px 32px;
-      box-shadow: 0 10px 48px rgba(11,232,129,0.25);
-      text-align: center;
-      margin-bottom: 32px;
-      animation: fadeIn .6s cubic-bezier(.7,.13,.58,.89);
-      max-width: 390px;
-      width: 100%;
+    .details {
+      margin-top: 20px;
+      line-height: 1.8;
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-    .logo-main {
-      width: 66px; height: 66px;
-      border-radius: 18px;
-      background: linear-gradient(135deg,var(--accent-3),var(--accent-1));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; color: #0e1726; font-size: 28px;
-      margin: 0 auto 18px auto;
-      box-shadow: 0 8px 30px rgba(11,232,129,0.3);
-      letter-spacing: -0.01em;
+    .fee {
+      color: #00FF00;
+      font-weight: bold;
     }
-    .welcome-card h1 {
-      margin: 0 0 10px 0;
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--accent-1);
-      letter-spacing: -0.03em;
-    }
-    .welcome-card p {
-      margin: 0 0 22px 0;
-      font-size: 1.08rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .btn-main {
-      display: inline-block;
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      color: #0e1726;
-      font-weight: 800;
-      font-size: 1.12rem;
+    button {
+      background-color: #333;
+      color: white;
       border: none;
-      border-radius: 14px;
-      padding: 13px 38px;
-      box-shadow: 0 8px 30px rgba(11,232,129,0.18);
-      cursor:pointer;
-      margin-top: 8px;
-      transition: background .15s, box-shadow .15s;
-      outline: none;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      cursor: pointer;
+      border-radius: 5px;
     }
-    .btn-main:active {
-      background: linear-gradient(90deg,#1abc9c,#0be881);
-      box-shadow: 0 7px 22px rgba(11,232,129,0.15);
-    }
-
-    /* Dashboard */
-    .dashboard-mobile {
-      width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
-      padding: 0 0;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      animation: fadeIn .7s cubic-bezier(.7,.13,.58,.89);
-    }
-    .card {
-      background: var(--card);
-      border: 1.5px solid var(--card-border);
-      border-radius: 20px;
-      padding: 28px 22px 24px 22px;
-      box-shadow: 0 10px 48px rgba(11,232,129,0.15);
-      margin: 0 0 18px 0;
-      animation: fadeIn .6s cubic-bezier(.7,.13,.58,.89);
-    }
-    .wallet-card {
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      align-items: flex-start;
-      padding: 0;
-      border-radius: 13px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      margin-bottom:15px;
-    }
-    .balances { line-height: 1.2; }
-    .balances .big { font-size: 2.25rem; font-weight: 900; color:var(--accent-1);}
-    .balances .small { font-size: 1.09rem; color: var(--muted); margin-top: 5px;}
-    .wallet-label { font-size: 1rem; color: var(--muted); font-weight: 700;}
-    .wallet-address {
-      font-weight:800;
-      color:var(--accent-1);
-      font-size:1.12em;
-      max-width:320px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      font-family: 'Inter', monospace;
-      margin-top:8px;
-      letter-spacing:0.01em;
-    }
-    .controls { display: flex; gap: 0; align-items: center; justify-content: stretch; width: 100%; }
-    .btn-dash {
-      width: 100%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 15px 0;
-      border-radius: 13px;
-      border: none;
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      color: #0e1726;
-      cursor:pointer;
-      font-weight: 800;
-      font-size: 1.08rem;
-      box-shadow: 0 8px 30px rgba(11,232,129,0.10);
-      transition: background .15s;
-      outline: none;
-      margin-top: 2px;
-    }
-    .btn-dash:active {
-      background: linear-gradient(90deg,#1abc9c,#0be881);
-    }
-    /* Footer */
-    footer {
-      font-size: 13px;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 22px;
-      margin-bottom: 12px;
-    }
-    /* Modal */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(11,232,129,0.17);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 60;
-      animation: fadeInBg .5s cubic-bezier(.7,.13,.58,.89);
-    }
-    .modal {
-      width: 95vw;
-      max-width: 410px;
-      background: linear-gradient(180deg, #eafaf1 0%, #1abc9c 100%);
-      border: 2px solid var(--card-border);
-      padding: 28px 18px 24px 18px;
-      border-radius: 17px;
-      color: #0e1726;
-      box-shadow: 0 10px 36px rgba(11,232,129,0.18);
-      position:relative;
-      font-family: 'Inter', Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .modal .label {
-      font-weight: 700;
-      color: #17c784;
-      margin-bottom: 7px;
-      font-size: 16px;
-      display: block;
-    }
-    .modal input[type="text"] {
-      width: 100%;
-      padding: 13px 11px;
-      border-radius: 10px;
-      background: #eafaf1;
-      border: 1.5px solid #17c784;
-      color: #0e1726;
-      font-size: 16px;
-      margin-bottom: 8px;
-      font-family: inherit;
-      outline: none;
-      transition: border .13s;
-    }
-    .modal input:focus {
-      border-color: var(--accent-1);
-      background: #eafaf1;
-    }
-    .progress {
-      height: 15px;
-      background: #b8eac7;
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 13px;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      transition: width .2s linear;
-    }
-    .modal .btn-dash {
-      margin-top: 18px;
-      min-width: 110px;
-      font-size: 1.08rem;
-    }
-    /* Toast */
-    .toast {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 24px;
-      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      color: #0e1726;
-      padding: 13px 19px;
-      border-radius: 12px;
-      box-shadow:0 10px 30px rgba(11,232,129,0.09);
-      display:none;
-      z-index:80;
-      font-weight: 800;
-      font-size: 1.04rem;
-      text-align: center;
-      min-width: 220px;
-      max-width: 90vw;
-      word-break:break-word;
-    }
-    .error { color: #ff5e5e; margin-bottom: 8px;}
-    .success { color: #0be881; margin-bottom: 8px;}
-    ::selection { background: var(--accent-1); color: #13293d;}
-    @media (max-width: 500px) {
-      .dashboard-mobile, .card, .modal {
-        max-width: 100vw;
-        border-radius: 0;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-      .welcome-card { border-radius: 0; }
+    button.clicked::after {
+      content: " ✅";
+      color: #00FF00;
     }
   </style>
 </head>
 <body>
-  <!-- الصفحة الترحيبية -->
-  <div class="centered" id="welcomePage">
-    <div class="welcome-card">
-      <div class="logo-main">C</div>
-      <h1>مرحبًا بك في C-Wallet</h1>
-      <p>محفظتك الآمنة USDT (BEP-20) جاهزة للاستخدام.<br>
-      <span style="color:#17c784;">احترافية. سريعة. خضراء.</span></p>
-      <button class="btn-main" id="btnEnter">دخول إلى المحفظة</button>
-    </div>
-    <footer class="muted">عرض تجريبي فقط — ليست منصة تداول. لا تشارك مفاتيحك الخاصة.</footer>
+
+  <h1>تفاصيل السحب</h1>
+  <div class="amount">-7500 USDT</div>
+  <div class="processing">⚠️ جاري المعالجة</div>
+  <p>⚠️ قد تفشل المعاملة بسبب مشاكل في الشبكة أو الرصيد.</p>
+
+  <div class="details">
+    <p>⏰ الوقت المتوقع للإكمال: 2025-09-16 20:25:00</p>
+    <p>📧 سيتم إرسال بريد إلكتروني عند اكتمال المعاملة.</p>
+    <p>🌐 الشبكة: BSC</p>
+    <p>📥 العنوان: 0x7107A5F411586c95140FAF48475370022a29a17a</p>
+    <p>💰 المبلغ: 7500 USDT</p>
+    <p class="fee">💸 رسوم الشبكة: 55 USDT</p>
+    <p>👛 المحفظة: المحفظة الفورية</p>
+    <p>📅 التاريخ: 2025-09-16 20:23:00</p>
   </div>
-  <!-- لوحة التحكم -->
-  <div class="dashboard-mobile" id="dashboard" style="display:none;">
-    <div class="card">
-      <div class="wallet-card">
-        <div class="balances">
-          <div class="big" id="animatedBalance">$7,500.00</div>
-          <div class="small">USDT (BEP-20)</div>
-        </div>
-        <div class="wallet-label">محفظتك</div>
-        <div class="wallet-address" id="displayWallet">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</div>
-      </div>
-      <div class="controls">
-        <button class="btn-dash" id="btnOpenWithdraw">سحب</button>
-      </div>
-    </div>
-    <footer class="muted" style="margin-bottom: 26px;">عرض تجريبي فقط — ليست منصة تداول. لا تشارك مفاتيحك الخاصة.</footer>
-  </div>
-  <!-- نافذة السحب -->
-  <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal">
-      <div style="margin-bottom:18px">
-        <label class="label">إلى عنوان المحفظة</label>
-        <input id="modalWallet" type="text" placeholder="0x... (BEP-20)" />
-        <div class="error" id="errWithdrawWallet"></div>
-      </div>
-      <div class="field" style="margin-bottom:18px;">
-        <label class="label">المبلغ (USDT)</label>
-        <input id="modalAmount" type="text" value="200" />
-        <div class="error" id="errWithdrawAmount"></div>
-      </div>
-      <button class="btn-dash" id="confirmWithdraw">تأكيد السحب</button>
-      <div id="withdrawStage" style="margin-top:22px;display:none">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="muted">الحالة</div>
-          <div id="stageLabel" style="font-weight:900;color:#17c784;">قيد المعالجة</div>
-        </div>
-        <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-        <div style="height:13px"></div>
-        <div id="stageNote" class="muted">جارٍ معالجة العملية... يرجى الانتظار</div>
-        <div style="margin-top:13px;color:#0e1726;font-weight:700;font-size:1.1em;" id="feeInfo"></div>
-        <div style="margin-top:7px;">
-          <span style="color:#17c784;font-weight:800;">قم بإيداع USDT إلى:</span>
-          <span style="color:#13293d;font-family:'Inter',monospace;word-break:break-all;">0x3140ee41555a14a7e0c4c96a636e63b24946d4f9</span>
-        </div>
-      </div>
-      <button class="btn-dash" style="margin-top:24px;background:transparent;color:#0e1726;border:1.5px solid #17c784;" id="confirmCancel">إلغاء</button>
-    </div>
-  </div>
-  <div class="toast" id="toast"></div>
-  <script>
-    // الانتقال
-    document.getElementById('btnEnter').onclick = function() {
-      document.getElementById('welcomePage').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'flex';
-      animateBalance('7500.00');
-    };
-    // الرسائل المنبثقة
-    function showToast(msg, type='info') {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      toast.style.background = type === 'error'
-        ? 'linear-gradient(90deg,#ff5e5e,#1abc9c)'
-        : 'linear-gradient(90deg,var(--accent-1),var(--accent-2))';
-      setTimeout(()=>{toast.style.display='none';},2100);
-    }
-    // نافذة السحب
-    document.getElementById('btnOpenWithdraw').onclick = function() {
-      openModal();
-    };
-    document.getElementById('confirmCancel').onclick = closeModal;
-    function openModal() {
-      document.getElementById('modalBackdrop').style.display='flex';
-      document.getElementById('withdrawStage').style.display='none';
-      document.getElementById('stageLabel').textContent = 'قيد المعالجة';
-      document.getElementById('progressBar').style.width = '0%';
-      document.getElementById('stageNote').textContent = 'جارٍ معالجة العملية... يرجى الانتظار';
-      document.getElementById('modalWallet').value = '';
-      document.getElementById('modalAmount').value = '200';
-      document.getElementById('errWithdrawWallet').textContent = '';
-      document.getElementById('errWithdrawAmount').textContent = '';
-      document.getElementById('feeInfo').textContent = '';
-    }
-    function closeModal() {
-      document.getElementById('modalBackdrop').style.display='none';
-      document.getElementById('withdrawStage').style.display='none';
-      document.getElementById('feeInfo').textContent = '';
-    }
-    function validateWithdraw() {
-      let ok = true;
-      const wallet = document.getElementById('modalWallet').value.trim();
-      const amount = document.getElementById('modalAmount').value.trim();
-      document.getElementById('errWithdrawWallet').textContent = '';
-      document.getElementById('errWithdrawAmount').textContent = '';
-      if(!wallet || !/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
-        document.getElementById('errWithdrawWallet').textContent = 'يرجى إدخال عنوان محفظة BEP-20 صحيح';
-        ok = false;
-      }
-      if(!amount || isNaN(amount) || Number(amount)<=0 || Number(amount)>7500) {
-        document.getElementById('errWithdrawAmount').textContent = 'المبلغ يجب أن يكون رقمًا موجبًا وأقل أو يساوي الرصيد';
-        ok = false;
-      }
-      return ok;
-    }
-    document.getElementById('confirmWithdraw').onclick = function() {
-      if(!validateWithdraw()) {
-        showToast('يرجى تصحيح الأخطاء قبل المتابعة.','error');
-        return;
-      }
-      // إظهار الرسوم ومعلومات الإيداع أثناء المعالجة فقط
-      document.getElementById('withdrawStage').style.display='block';
-      document.getElementById('stageLabel').textContent = 'قيد المعالجة';
-      document.getElementById('progressBar').style.width = '0%';
-      document.getElementById('stageNote').textContent = 'جارٍ معالجة العملية... يرجى الانتظار';
-      document.getElementById('feeInfo').textContent = 'رسوم الشبكة: 122 USDT';
-      let pct = 0;
-      let timer = setInterval(()=>{
-        pct+=26;
-        document.getElementById('progressBar').style.width = pct+'%';
-        if(pct>=100) {
-          clearInterval(timer);
-          document.getElementById('stageLabel').textContent = 'تمت العملية';
-          document.getElementById('stageNote').textContent = 'تمت العملية بنجاح!';
-          showToast('تم السحب بنجاح!','success');
-          setTimeout(closeModal, 1200);
-          let current = Number(document.getElementById('animatedBalance').textContent.replace(/[^0-9.]/g,''));
-          let out = Number(document.getElementById('modalAmount').value);
-          animateBalance((current-out).toFixed(2));
-        }
-      }, 400);
-    };
-    // تحريك الرصيد
-    function animateBalance(val) {
-      const el = document.getElementById('animatedBalance');
-      let start = parseFloat(el.textContent.replace(/[^0-9.]/g,'')) || 0;
-      let end = parseFloat(val);
-      let curr = start;
-      let steps = 36, step = (end-start)/steps, count = 0;
-      let timer = setInterval(()=>{
-        curr += step;
-        count++;
-        el.textContent = '$' + Math.max(curr,0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-        if(count>=steps) {
-          el.textContent = '$' + Math.max(end,0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-          clearInterval(timer);
-        }
-      },22);
-    }
-    // إغلاق النافذة عند النقر خارجها
-    document.getElementById('modalBackdrop').onclick = function(e){
-      if(e.target === this) closeModal();
-    };
-    window.onload = function(){};
-  </script>
+
+  <button onclick="this.classList.add('clicked')">الإبلاغ عن احتيال</button>
+  <button onclick="this.classList.add('clicked')">حفظ العنوان</button>
+
 </body>
 </html>
